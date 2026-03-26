@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Renata | Influencer Digital Premium</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-pale: #F5E6B8;
+    --black: #080808;
+    --dark: #111111;
+    --dark-2: #1A1A1A;
+    --dark-3: #222222;
+    --graphite: #2D2D2D;
+    --text-light: #E8E0D5;
+    --text-muted: #9A9080;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--black); color: var(--text-light); font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
+  #loader { position: fixed; inset: 0; z-index: 9999; background: var(--black); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 20px; transition: opacity 0.8s ease, visibility 0.8s ease; }
+  #loader.hidden { opacity: 0; visibility: hidden; }
+  .loader-name { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 6vw, 4rem); color: var(--gold); letter-spacing: 0.3em; animation: pulse-gold 2s ease-in-out infinite; }
+  .loader-bar { width: 200px; height: 1px; background: var(--graphite); position: relative; overflow: hidden; }
+  .loader-bar::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, var(--gold), transparent); animation: shimmer-bar 1.5s ease-in-out infinite; }
+  @keyframes shimmer-bar { to { left: 100%; } }
+  @keyframes pulse-gold { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; text-shadow: 0 0 30px rgba(201,168,76,0.5); } }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 20px 60px; display: flex; align-items: center; justify-content: space-between; transition: all 0.4s ease; background: transparent; }
+  nav.scrolled { background: rgba(8,8,8,0.95); backdrop-filter: blur(20px); padding: 15px 60px; border-bottom: 1px solid rgba(201,168,76,0.1); }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--gold); letter-spacing: 0.15em; text-decoration: none; }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; transition: color 0.3s; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 10px 24px; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; transition: all 0.3s ease; }
+  .nav-cta:hover { background: var(--gold); color: var(--black); }
+  .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 50%, rgba(201,168,76,0.05) 0%, transparent 70%); pointer-events: none; }
+  .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 140px 60px 80px; position: relative; }
+  .hero-tag { font-size: 0.65rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); margin-bottom: 30px; display: flex; align-items: center; gap: 15px; }
+  .hero-tag::before { content: ''; width: 40px; height: 1px; background: var(--gold); }
+  .hero-name { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 6vw, 6rem); font-weight: 700; line-height: 0.95; color: #fff; margin-bottom: 30px; }
+  .hero-name span { color: var(--gold); font-style: italic; }
+  .hero-tagline { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.1rem, 1.8vw, 1.5rem); font-weight: 300; color: var(--text-muted); line-height: 1.6; margin-bottom: 50px; max-width: 420px; }
+  .hero-cta-group { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+  .btn-primary { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: var(--black); padding: 16px 40px; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; text-decoration: none; display: inline-block; transition: all 0.3s ease; position: relative; overflow: hidden; }
+  .btn-primary::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: rgba(255,255,255,0.2); transform: skewX(-20deg); transition: left 0.4s ease; }
+  .btn-primary:hover::after { left: 150%; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 40px rgba(201,168,76,0.4); }
+  .btn-outline { color: var(--text-muted); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; display: flex; align-items: center; gap: 10px; transition: color 0.3s; }
+  .btn-outline:hover { color: var(--gold); }
+  .hero-right { position: relative; display: flex; align-items: center; justify-content: center; }
+  .hero-image-frame { position: relative; width: 75%; aspect-ratio: 3/4; margin-top: 80px; }
+  .hero-image-frame::before { content: ''; position: absolute; top: -20px; right: -20px; width: 100%; height: 100%; border: 1px solid rgba(201,168,76,0.3); pointer-events: none; z-index: 1; }
+  .hero-image-frame::after { content: ''; position: absolute; bottom: -20px; left: -20px; width: 100%; height: 100%; border: 1px solid rgba(201,168,76,0.15); pointer-events: none; }
+  .hero-img-placeholder { width: 100%; height: 100%; background: linear-gradient(160deg, var(--dark-2) 0%, var(--graphite) 40%, var(--dark-3) 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; position: relative; overflow: hidden; }
+  .hero-img-placeholder::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(45deg, transparent, transparent 30px, rgba(201,168,76,0.03) 30px, rgba(201,168,76,0.03) 31px); }
+  .placeholder-icon { font-size: 4rem; opacity: 0.3; }
+  .placeholder-text { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); }
+  .hero-stats { position: absolute; bottom: 40px; left: -40px; background: rgba(8,8,8,0.9); border: 1px solid rgba(201,168,76,0.2); backdrop-filter: blur(20px); padding: 20px 30px; display: flex; gap: 30px; }
+  .hero-stat-item { text-align: center; }
+  .hero-stat-number { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--gold); display: block; }
+  .hero-stat-label { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); }
+  section { padding: 120px 60px; }
+  .section-tag { font-size: 0.65rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; display: flex; align-items: center; gap: 15px; }
+  .section-tag::before { content: ''; width: 30px; height: 1px; background: var(--gold); }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; line-height: 1.1; margin-bottom: 20px; }
+  .section-title span { color: var(--gold); font-style: italic; }
+  .divider { width: 60px; height: 1px; background: linear-gradient(90deg, var(--gold), transparent); margin: 30px 0; }
+  .sobre { background: var(--dark); }
+  .sobre-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; max-width: 1300px; margin: 0 auto; }
+  .sobre-img-wrap { position: relative; aspect-ratio: 4/5; }
+  .sobre-img-wrap::after { content: ''; position: absolute; bottom: -15px; right: -15px; width: 70%; height: 70%; border: 1px solid rgba(201,168,76,0.25); pointer-events: none; }
+  .sobre-placeholder { width: 100%; height: 100%; background: linear-gradient(160deg, var(--dark-2), var(--graphite)); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; }
+  .sobre-text { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 300; color: var(--text-muted); line-height: 1.8; margin-bottom: 40px; }
+  .sobre-tags { display: flex; flex-wrap: wrap; gap: 12px; }
+  .sobre-tag { border: 1px solid rgba(201,168,76,0.3); padding: 8px 20px; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); transition: all 0.3s; }
+  .sobre-tag:hover { background: rgba(201,168,76,0.1); }
+  .metricas { background: var(--black); }
+  .metricas-header { max-width: 700px; margin: 0 auto 80px; text-align: center; }
+  .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; max-width: 1300px; margin: 0 auto 80px; }
+  .metric-card { background: var(--dark-2); padding: 50px 30px; text-align: center; position: relative; overflow: hidden; transition: all 0.4s ease; }
+  .metric-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); transform: scaleX(0); transition: transform 0.4s ease; }
+  .metric-card:hover::before { transform: scaleX(1); }
+  .metric-card:hover { background: var(--dark-3); transform: translateY(-4px); }
+  .metric-icon { font-size: 2rem; margin-bottom: 20px; }
+  .metric-number { font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--gold); font-weight: 700; display: block; line-height: 1; margin-bottom: 10px; }
+  .metric-label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 8px; }
+  .metric-sub { font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; color: rgba(154,144,128,0.6); }
+  .portfolio { background: var(--dark); }
+  .portfolio-header { max-width: 700px; margin: 0 auto 60px; text-align: center; }
+  .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1300px; margin: 0 auto; }
+  .portfolio-card { position: relative; aspect-ratio: 4/5; overflow: hidden; cursor: pointer; background: var(--dark-2); }
+  .portfolio-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; background: linear-gradient(160deg, var(--dark-2), var(--graphite)); transition: transform 0.5s ease; }
+  .portfolio-card:hover .portfolio-placeholder { transform: scale(1.05); }
+  .portfolio-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(8,8,8,0.95) 0%, transparent 50%); display: flex; flex-direction: column; justify-content: flex-end; padding: 30px; opacity: 0; transition: opacity 0.4s ease; }
+  .portfolio-card:hover .portfolio-overlay { opacity: 1; }
+  .portfolio-overlay h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #fff; margin-bottom: 8px; }
+  .portfolio-overlay p { font-size: 0.75rem; color: var(--gold); letter-spacing: 0.1em; }
+  .portfolio-border { position: absolute; inset: 0; border: 1px solid transparent; transition: border-color 0.4s ease; pointer-events: none; }
+  .portfolio-card:hover .portfolio-border { border-color: rgba(201,168,76,0.4); }
+  .servicos { background: var(--black); }
+  .servicos-header { max-width: 700px; margin: 0 auto 80px; text-align: center; }
+  .servicos-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; max-width: 1300px; margin: 0 auto; }
+  .servico-item { background: var(--dark-2); padding: 50px; display: flex; gap: 30px; align-items: flex-start; transition: all 0.3s ease; position: relative; overflow: hidden; }
+  .servico-item::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.4s ease; }
+  .servico-item:hover::after { width: 100%; }
+  .servico-item:hover { background: var(--dark-3); }
+  .servico-icon { width: 60px; height: 60px; border: 1px solid rgba(201,168,76,0.3); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; transition: all 0.3s; }
+  .servico-item:hover .servico-icon { background: rgba(201,168,76,0.1); border-color: var(--gold); }
+  .servico-content h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #fff; margin-bottom: 12px; }
+  .servico-content p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; }
+  .servico-price { font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; color: var(--gold); margin-top: 15px; letter-spacing: 0.1em; }
+  .diferenciais { background: var(--dark); position: relative; overflow: hidden; }
+  .diferenciais::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 800px; height: 800px; border-radius: 50%; background: radial-gradient(circle, rgba(201,168,76,0.04) 0%, transparent 70%); pointer-events: none; }
+  .diferenciais-header { text-align: center; margin-bottom: 80px; }
+  .diferenciais-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1300px; margin: 0 auto; }
+  .diferencial-card { padding: 50px 40px; border: 1px solid rgba(201,168,76,0.1); transition: all 0.4s ease; position: relative; overflow: hidden; }
+  .diferencial-card::before { content: ''; position: absolute; top: 0; left: 0; width: 0; height: 100%; background: rgba(201,168,76,0.04); transition: width 0.4s ease; }
+  .diferencial-card:hover::before { width: 100%; }
+  .diferencial-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-6px); }
+  .diferencial-number { font-family: 'Playfair Display', serif; font-size: 4rem; color: rgba(201,168,76,0.15); font-weight: 900; line-height: 1; margin-bottom: 20px; }
+  .diferencial-card h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #fff; margin-bottom: 15px; }
+  .diferencial-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; }
+  .cta-final { background: var(--black); position: relative; text-align: center; overflow: hidden; }
+  .cta-final::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+  .cta-final-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(201,168,76,0.06) 0%, transparent 60%); }
+  .cta-content { position: relative; max-width: 800px; margin: 0 auto; }
+  .cta-label { font-size: 0.65rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); margin-bottom: 30px; display: block; }
+  .cta-title { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 700; line-height: 1.1; margin-bottom: 25px; }
+  .cta-title em { color: var(--gold); font-style: italic; }
+  .cta-subtitle { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--text-muted); margin-bottom: 60px; line-height: 1.6; }
+  .cta-btn { display: inline-flex; align-items: center; gap: 15px; background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: var(--black); padding: 22px 60px; font-size: 0.8rem; letter-spacing: 0.25em; text-transform: uppercase; font-weight: 700; text-decoration: none; transition: all 0.4s ease; position: relative; overflow: hidden; }
+  .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 20px 60px rgba(201,168,76,0.4); }
+  footer { background: var(--dark); border-top: 1px solid rgba(201,168,76,0.1); padding: 60px; display: flex; align-items: center; justify-content: space-between; }
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--gold); letter-spacing: 0.15em; }
+  .footer-text { font-size: 0.7rem; letter-spacing: 0.1em; color: var(--text-muted); }
+  .footer-agency { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(154,144,128,0.5); }
+  .whatsapp-float { position: fixed; bottom: 40px; right: 40px; z-index: 999; width: 60px; height: 60px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.4); text-decoration: none; transition: all 0.3s ease; animation: float-wa 3s ease-in-out infinite; }
+  .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 8px 30px rgba(37,211,102,0.5); animation: none; }
+  @keyframes float-wa { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+  .fade-in-left { opacity: 0; transform: translateX(-30px); transition: all 0.8s ease; }
+  .fade-in-left.visible { opacity: 1; transform: translateX(0); }
+  .fade-in-right { opacity: 0; transform: translateX(30px); transition: all 0.8s ease; }
+  .fade-in-right.visible { opacity: 1; transform: translateX(0); }
+  @media (max-width: 1024px) {
+    nav { padding: 20px 30px; } nav.scrolled { padding: 15px 30px; } .nav-links { display: none; }
+    section { padding: 80px 30px; } .hero { grid-template-columns: 1fr; }
+    .hero-left { padding: 140px 30px 60px; } .hero-right { padding: 0 30px 80px; }
+    .hero-image-frame { width: 100%; margin-top: 0; } .sobre-grid { grid-template-columns: 1fr; gap: 40px; }
+    .metrics-grid { grid-template-columns: repeat(2, 1fr); } .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+    .servicos-grid { grid-template-columns: 1fr; } .diferenciais-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 20px; text-align: center; } .hero-stats { left: 0; }
+  }
+</style>
+</head>
+<body>
+<div id="loader">
+  <div class="loader-name">RENATA</div>
+  <div class="loader-bar"></div>
+</div>
+
+<a href="https://wa.me/5500000000003?text=Ol%C3%A1!%20Tenho%20interesse%20em%20contratar%20Renata%20para%20uma%20campanha." class="whatsapp-float" target="_blank">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<nav id="navbar">
+  <a href="#" class="nav-logo">Renata</a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li><li><a href="#metricas">Métricas</a></li>
+    <li><a href="#portfolio">Portfólio</a></li><li><a href="#servicos">Serviços</a></li>
+  </ul>
+  <a href="https://wa.me/5500000000003?text=Ol%C3%A1!%20Tenho%20interesse%20em%20contratar%20Renata%20para%20uma%20campanha." class="nav-cta" target="_blank">Contratar</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag fade-in">Gastronomia & Lifestyle</div>
+    <h1 class="hero-name fade-in">Renata<br><span>Influencer</span></h1>
+    <p class="hero-tagline fade-in">Sabor, estilo e autenticidade que conquistam corações e paladares</p>
+    <div class="hero-cta-group fade-in">
+      <a href="https://wa.me/5500000000003?text=Ol%C3%A1!%20Tenho%20interesse%20em%20contratar%20Renata%20para%20uma%20campanha." class="btn-primary" target="_blank">Contratar Agora</a>
+      <a href="#sobre" class="btn-outline">Conhecer mais <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-image-frame fade-in-right">
+      <div class="hero-img-placeholder">
+        <span class="placeholder-icon">✦</span>
+        <span class="placeholder-text">Foto Principal</span>
+      </div>
+    </div>
+    <div class="hero-stats fade-in">
+      <div class="hero-stat-item"><span class="hero-stat-number">79,4K</span><span class="hero-stat-label">Seguidores</span></div>
+      <div class="hero-stat-item"><span class="hero-stat-number">8,2K</span><span class="hero-stat-label">Engajamento</span></div>
+      <div class="hero-stat-item"><span class="hero-stat-number">95%</span><span class="hero-stat-label">Satisfação</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sobre" id="sobre">
+  <div class="sobre-grid">
+    <div class="sobre-img-wrap fade-in-left">
+      <div class="sobre-placeholder">
+        <span style="font-size:3rem;opacity:0.3">✦</span>
+        <span style="font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--text-muted)">Foto Secundária</span>
+      </div>
+    </div>
+    <div class="fade-in-right">
+      <div class="section-tag">Quem é</div>
+      <h2 class="section-title">Renata<br><span>em detalhes</span></h2>
+      <div class="divider"></div>
+      <p class="sobre-text">Renata gera 79 mil visualizações com audiência fiel (74,8% seguidores) e forte presença em Stories (90,9%). Conteúdo autêntico que cria conexão real e duradoura com o público.</p>
+      <p class="sobre-text">Audiência concentrada em São José dos Campos e Rio de Janeiro, com 578 interações e 171 novos seguidores conquistados no período analisado.</p>
+      <div class="sobre-tags"><span class="sobre-tag">Gastronomia</span><span class="sobre-tag">Culinária</span><span class="sobre-tag">Lifestyle</span><span class="sobre-tag">Restaurantes</span><span class="sobre-tag">Food & Travel</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="metricas" id="metricas">
+  <div class="metricas-header fade-in">
+    <div class="section-tag" style="justify-content:center">Resultados Reais</div>
+    <h2 class="section-title" style="text-align:center">Números que<br><span>impressionam</span></h2>
+  </div>
+  <div class="metrics-grid">
+    <div class="metric-card fade-in"><div class="metric-icon">👥</div><span class="metric-number" data-target="79436">0</span><span class="metric-label">Seguidores</span><span class="metric-sub">Instagram + TikTok</span></div>
+    <div class="metric-card fade-in" style="transition-delay:0.1s"><div class="metric-icon">💫</div><span class="metric-number" data-target="8163">0</span><span class="metric-label">Taxa de Engajamento</span><span class="metric-sub">Acima da média do setor</span></div>
+    <div class="metric-card fade-in" style="transition-delay:0.2s"><div class="metric-icon">📊</div><span class="metric-number" data-target="578">0</span><span class="metric-label">Alcance Médio</span><span class="metric-sub">Por publicação</span></div>
+    <div class="metric-card fade-in" style="transition-delay:0.3s"><div class="metric-icon">🤝</div><span class="metric-number" data-target="171">0</span><span class="metric-label">Parcerias</span><span class="metric-sub">Marcas atendidas</span></div>
+  </div>
+</section>
+
+<section class="portfolio" id="portfolio">
+  <div class="portfolio-header fade-in">
+    <div class="section-tag" style="justify-content:center">Trabalhos</div>
+    <h2 class="section-title" style="text-align:center">Campanhas que<br><span>marcaram</span></h2>
+  </div>
+  <div class="portfolio-grid">
+    <div class="portfolio-card fade-in" style="transition-delay:0.0s">
+      <div class="portfolio-placeholder">
+        <span style="font-size:2.5rem;opacity:0.25">📸</span>
+        <span style="font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--text-muted)">Campanha 01</span>
+      </div>
+      <div class="portfolio-overlay">
+        <h3>Food Photography</h3>
+        <p>Gastronomia Premium</p>
+      </div>
+      <div class="portfolio-border"></div>
+    </div>
+    <div class="portfolio-card fade-in" style="transition-delay:0.1s">
+      <div class="portfolio-placeholder">
+        <span style="font-size:2.5rem;opacity:0.25">📸</span>
+        <span style="font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--text-muted)">Campanha 02</span>
+      </div>
+      <div class="portfolio-overlay">
+        <h3>Restaurante Experience</h3>
+        <p>Lifestyle & Gourmet</p>
+      </div>
+      <div class="portfolio-border"></div>
+    </div>
+    <div class="portfolio-card fade-in" style="transition-delay:0.2s">
+      <div class="portfolio-placeholder">
+        <span style="font-size:2.5rem;opacity:0.25">📸</span>
+        <span style="font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--text-muted)">Campanha 03</span>
+      </div>
+      <div class="portfolio-overlay">
+        <h3>Receita Exclusiva</h3>
+        <p>Conteúdo Culinário</p>
+      </div>
+      <div class="portfolio-border"></div>
+    </div></div>
+</section>
+
+<section class="servicos" id="servicos">
+  <div class="servicos-header fade-in">
+    <div class="section-tag" style="justify-content:center">O que Ofereço</div>
+    <h2 class="section-title" style="text-align:center">Serviços <span>premium</span></h2>
+  </div>
+  <div class="servicos-grid">
+    <div class="servico-item fade-in" style="transition-delay:0.0s">
+      <div class="servico-icon">🍽️</div>
+      <div class="servico-content">
+        <h3>Reviews Gastronômicos</h3>
+        <p>Avaliações imersivas de restaurantes, produtos alimentícios e experiências culinárias com fotografia de alto impacto.</p>
+        <div class="servico-price">Consulte disponibilidade →</div>
+      </div>
+    </div>
+    <div class="servico-item fade-in" style="transition-delay:0.1s">
+      <div class="servico-icon">📸</div>
+      <div class="servico-content">
+        <h3>Food Photography</h3>
+        <p>Conteúdo visual premium com estética gourmet que valoriza sua marca e desperta o desejo de compra.</p>
+        <div class="servico-price">Consulte disponibilidade →</div>
+      </div>
+    </div>
+    <div class="servico-item fade-in" style="transition-delay:0.2s">
+      <div class="servico-icon">🍷</div>
+      <div class="servico-content">
+        <h3>Receitas Patrocinadas</h3>
+        <p>Criação de receitas exclusivas utilizando seus produtos, gerando conteúdo evergreen de alta conversão.</p>
+        <div class="servico-price">Consulte disponibilidade →</div>
+      </div>
+    </div>
+    <div class="servico-item fade-in" style="transition-delay:0.30000000000000004s">
+      <div class="servico-icon">✈️</div>
+      <div class="servico-content">
+        <h3>Food & Travel Content</h3>
+        <p>Conteúdo de viagem com foco gastronômico, perfeito para destinos, hotéis, produtos e experiências premium.</p>
+        <div class="servico-price">Consulte disponibilidade →</div>
+      </div>
+    </div></div>
+</section>
+
+<section class="diferenciais">
+  <div class="diferenciais-header fade-in">
+    <div class="section-tag" style="justify-content:center">Por Que Escolher</div>
+    <h2 class="section-title" style="text-align:center">Meus <span>diferenciais</span></h2>
+  </div>
+  <div class="diferenciais-grid">
+    <div class="diferencial-card fade-in"><div class="diferencial-number">01</div><h3>Audiência Altamente Qualificada</h3><p>Seguidores reais e engajados com perfil alinhado ao público-alvo premium, garantindo campanhas com resultado mensurável.</p></div>
+    <div class="diferencial-card fade-in" style="transition-delay:0.1s"><div class="diferencial-number">02</div><h3>Alta Taxa de Conversão</h3><p>Histórico comprovado de campanhas com retorno acima da média do mercado, com marcas de diferentes segmentos.</p></div>
+    <div class="diferencial-card fade-in" style="transition-delay:0.2s"><div class="diferencial-number">03</div><h3>Estratégia Personalizada</h3><p>Cada parceria é planejada de forma única, respeitando a identidade da marca e maximizando o impacto da campanha.</p></div>
+  </div>
+</section>
+
+<section class="cta-final">
+  <div class="cta-final-bg"></div>
+  <div class="cta-content fade-in">
+    <span class="cta-label">Pronto para crescer?</span>
+    <h2 class="cta-title">Leve sua marca<br>para outro <em>nível</em></h2>
+    <p class="cta-subtitle">Entre em contato agora e descubra como uma parceria com Renata pode transformar sua presença digital.</p>
+    <a href="https://wa.me/5500000000003?text=Ol%C3%A1!%20Tenho%20interesse%20em%20contratar%20Renata%20para%20uma%20campanha." class="cta-btn" target="_blank">
+      Falar no WhatsApp
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Renata</div>
+  <div class="footer-text">© 2025 · Todos os direitos reservados</div>
+  <div class="footer-agency">Agência de Influenciadores</div>
+</footer>
+
+<script>
+window.addEventListener('load', () => { setTimeout(() => { document.getElementById('loader').classList.add('hidden'); }, 1800); });
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => { if (window.scrollY > 80) navbar.classList.add('scrolled'); else navbar.classList.remove('scrolled'); });
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      const counter = entry.target.querySelector('[data-target]');
+      if (counter) animateCounter(counter);
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el => observer.observe(el));
+function animateCounter(el) {
+  const target = parseFloat(el.dataset.target);
+  const suffix = el.dataset.suffix || '';
+  const isFloat = target % 1 !== 0;
+  const duration = 2000;
+  const start = performance.now();
+  function update(time) {
+    const progress = Math.min((time - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    const current = target * ease;
+    if (isFloat) { el.textContent = current.toFixed(1) + suffix; }
+    else if (target >= 1000) { el.textContent = Math.floor(current/1000) + 'K' + (suffix === '+' ? '+' : ''); }
+    else { el.textContent = Math.floor(current) + suffix; }
+    if (progress < 1) requestAnimationFrame(update);
+    else {
+      if (target >= 100000) el.textContent = Math.floor(target/1000) + 'K';
+      else el.textContent = target + suffix;
+    }
+  }
+  requestAnimationFrame(update);
+}
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const heroFrame = document.querySelector('.hero-image-frame');
+  if (heroFrame && scrolled < window.innerHeight) { heroFrame.style.transform = `translateY(${scrolled * 0.1}px)`; }
+});
+</script>
+</body>
+</html>
