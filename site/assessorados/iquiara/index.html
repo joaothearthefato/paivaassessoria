@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iquiara Machado | Influencer Digital Premium</title>
+<meta name="description" content="Iquiara é influenciadora digital e criadora de conteúdo com foco no nicho plus size, dança e empoderamento. Natural de S...">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   VARIÁVEIS GLOBAIS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+:root {
+  --gold:      #C9A84C;
+  --gold-lt:   #E8C97A;
+  --black:     #080808;
+  --dark:      #111111;
+  --dark2:     #1A1A1A;
+  --dark3:     #222222;
+  --graph:     #2D2D2D;
+  --text:      #E8E0D5;
+  --muted:     #9A9080;
+}
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   RESET & BASE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--text);font-family:"Montserrat",sans-serif;font-weight:300;line-height:1.75;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PLACEHOLDER (quando não há imagem)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.ph{
+  width:100%;height:100%;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:14px;
+  background:linear-gradient(160deg,var(--dark2) 0%,var(--graph) 40%,var(--dark3) 100%);
+  position:relative;
+}
+.ph::before{
+  content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(45deg,transparent,transparent 28px,rgba(201,168,76,.03) 28px,rgba(201,168,76,.03) 29px);
+}
+.ph-icon{font-size:3rem;opacity:.25;position:relative}
+.ph-text{font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);position:relative}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   LOADER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#loader{
+  position:fixed;inset:0;z-index:9999;
+  background:var(--black);
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:20px;
+  transition:opacity .8s ease,visibility .8s ease;
+}
+#loader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.ld-name{
+  font-family:"Playfair Display",serif;
+  font-size:clamp(1.8rem,6vw,3.5rem);
+  color:var(--gold);letter-spacing:.3em;
+  animation:pulse 2s ease-in-out infinite;
+}
+.ld-bar{width:180px;height:1px;background:var(--graph);position:relative;overflow:hidden}
+.ld-bar::after{
+  content:"";position:absolute;top:0;left:-100%;
+  width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  animation:bar 1.5s ease-in-out infinite;
+}
+@keyframes bar{to{left:100%}}
+@keyframes pulse{0%,100%{opacity:.7}50%{opacity:1;text-shadow:0 0 30px rgba(201,168,76,.5)}}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   NAVEGAÇÃO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+nav#topnav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:18px 5vw;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:all .4s ease;
+}
+nav#topnav.scrolled{
+  background:rgba(8,8,8,.96);
+  backdrop-filter:blur(20px);
+  padding:12px 5vw;
+  border-bottom:1px solid rgba(201,168,76,.08);
+  box-shadow:0 4px 30px rgba(0,0,0,.4);
+}
+.nav-logo{font-family:"Playfair Display",serif;font-size:1.4rem;color:var(--gold);letter-spacing:.15em}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{color:var(--muted);font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;transition:color .3s}
+.nav-links a:hover{color:var(--gold)}
+.nav-btn{
+  background:transparent;border:1px solid var(--gold);
+  color:var(--gold);padding:9px 22px;
+  font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
+  transition:all .3s;cursor:pointer;
+}
+.nav-btn:hover{background:var(--gold);color:var(--black)}
+/* hamburger */
+.hamburger{
+  display:none;flex-direction:column;gap:5px;
+  background:none;border:none;cursor:pointer;padding:6px;
+}
+.hamburger span{display:block;width:22px;height:1.5px;background:var(--gold);transition:all .3s}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px)}
+/* mobile menu */
+.mob-menu{
+  display:none;position:fixed;inset:0;z-index:99;
+  background:var(--dark);
+  flex-direction:column;align-items:center;justify-content:center;gap:28px;
+  opacity:0;transition:opacity .4s;
+}
+.mob-menu.open{display:flex;opacity:1}
+.mob-menu a{font-family:"Playfair Display",serif;font-size:clamp(1.5rem,6vw,2rem);color:var(--muted);transition:color .3s}
+.mob-menu a:hover{color:var(--gold)}
+.mob-close{position:absolute;top:22px;right:22px;background:none;border:none;color:var(--gold);font-size:1.6rem;cursor:pointer;line-height:1}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   HERO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.hero{
+  min-height:100vh;
+  display:grid;grid-template-columns:1fr 1fr;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(ellipse at 70% 50%,rgba(201,168,76,.04) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-left{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:140px 5vw 80px;
+  position:relative;
+}
+.hero-eyebrow{
+  font-size:.62rem;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:28px;
+  display:flex;align-items:center;gap:14px;
+}
+.hero-eyebrow::before{content:"";width:36px;height:1px;background:var(--gold)}
+.hero-name{
+  font-family:"Playfair Display",serif;
+  font-size:clamp(3rem,7vw,6.5rem);
+  font-weight:700;line-height:.92;
+  color:#fff;margin-bottom:12px;
+}
+.hero-name em{color:var(--gold);font-style:italic}
+.hero-sub{
+  font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:28px;
+}
+.hero-tagline{
+  font-family:"Cormorant Garamond",serif;
+  font-size:clamp(1rem,1.6vw,1.4rem);
+  font-weight:300;color:var(--muted);
+  line-height:1.7;margin-bottom:48px;max-width:420px;
+}
+.hero-actions{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.btn-primary{
+  background:linear-gradient(135deg,var(--gold),var(--gold-lt));
+  color:var(--black);padding:15px 36px;
+  font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;
+  font-weight:700;display:inline-block;transition:all .3s ease;
+  position:relative;overflow:hidden;cursor:pointer;border:none;
+  text-decoration:none;
+}
+.btn-primary::after{
+  content:"";position:absolute;top:0;left:-100%;
+  width:100%;height:100%;
+  background:rgba(255,255,255,.2);
+  transform:skewX(-20deg);transition:left .4s;
+}
+.btn-primary:hover::after{left:150%}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 40px rgba(201,168,76,.4)}
+.btn-ghost{
+  color:var(--muted);font-size:.68rem;letter-spacing:.15em;
+  text-transform:uppercase;display:flex;align-items:center;gap:8px;
+  transition:color .3s;text-decoration:none;
+}
+.btn-ghost:hover{color:var(--gold)}
+
+/* hero imagem */
+.hero-right{
+  position:relative;display:flex;align-items:center;justify-content:center;
+}
+.hero-frame{
+  position:relative;
+  width:min(76%,420px);aspect-ratio:3/4;
+  margin-top:80px;
+}
+.hero-frame::before{
+  content:"";position:absolute;top:-18px;right:-18px;
+  width:100%;height:100%;
+  border:1px solid rgba(201,168,76,.3);
+  pointer-events:none;z-index:1;
+}
+.hero-frame::after{
+  content:"";position:absolute;bottom:-18px;left:-18px;
+  width:100%;height:100%;
+  border:1px solid rgba(201,168,76,.12);
+  pointer-events:none;
+}
+.hero-frame-inner{
+  width:100%;height:100%;
+  overflow:hidden;
+  position:relative;
+}
+.hero-frame-inner img,
+.hero-frame-inner .ph{
+  width:100%;height:100%;
+  object-fit:cover;object-position:top center;
+}
+
+/* hero stats card */
+.hero-stats{
+  position:absolute;bottom:36px;left:-36px;
+  background:rgba(8,8,8,.92);
+  border:1px solid rgba(201,168,76,.18);
+  backdrop-filter:blur(20px);
+  padding:18px 26px;
+  display:flex;gap:24px;
+  z-index:10;
+}
+.hs-item{text-align:center}
+.hs-num{
+  font-family:"Playfair Display",serif;
+  font-size:1.4rem;color:var(--gold);display:block;
+}
+.hs-lbl{font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SEÇÕES COMUNS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+section{padding:110px 5vw}
+.sec-tag{
+  font-size:.62rem;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:18px;
+  display:flex;align-items:center;gap:14px;
+}
+.sec-tag::before{content:"";width:28px;height:1px;background:var(--gold)}
+.sec-title{
+  font-family:"Playfair Display",serif;
+  font-size:clamp(2.2rem,5vw,3.8rem);
+  font-weight:700;line-height:1.1;margin-bottom:20px;
+}
+.sec-title em{color:var(--gold);font-style:italic}
+.gold-line{width:50px;height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin:26px 0}
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.1),transparent);margin:0 5vw}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SOBRE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.sobre{background:var(--dark)}
+.sobre-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:70px;align-items:center;
+  max-width:1280px;margin:0 auto;
+}
+.sobre-img-wrap{
+  position:relative;aspect-ratio:4/5;overflow:hidden;
+}
+.sobre-img-wrap::after{
+  content:"";position:absolute;bottom:-14px;right:-14px;
+  width:66%;height:66%;
+  border:1px solid rgba(201,168,76,.22);
+  pointer-events:none;
+}
+.sobre-img-wrap img,
+.sobre-img-wrap .ph{
+  width:100%;height:100%;
+  object-fit:cover;object-position:top center;
+}
+.bio-text{
+  font-family:"Cormorant Garamond",serif;
+  font-size:1.2rem;font-weight:300;
+  color:var(--muted);line-height:1.85;
+  margin-bottom:28px;
+}
+.tags-wrap{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.tag{
+  border:1px solid rgba(201,168,76,.28);
+  padding:6px 18px;font-size:.63rem;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);transition:background .3s;
+}
+.tag:hover{background:rgba(201,168,76,.08)}
+
+/* público */
+.pub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:40px}
+.pub-card{
+  background:var(--dark2);padding:22px 18px;text-align:center;
+}
+.pub-card h4{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.pub-card p{font-size:.78rem;color:var(--muted);line-height:1.5}
+
+/* distribuição */
+.dist-wrap{display:flex;gap:24px;margin-top:32px;flex-wrap:wrap}
+.dist-item{
+  display:flex;flex-direction:column;align-items:center;
+  padding:14px 20px;
+  border:1px solid rgba(201,168,76,.15);
+}
+.dist-fmt{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.dist-pct{font-family:"Playfair Display",serif;font-size:1.6rem;color:var(--gold)}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   MÉTRICAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.metricas{background:var(--black)}
+.met-head{max-width:640px;margin:0 auto 70px;text-align:center}
+.met-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:2px;max-width:1280px;margin:0 auto;
+}
+.met-card{
+  background:var(--dark2);padding:44px 24px;text-align:center;
+  position:relative;overflow:hidden;transition:all .4s ease;
+}
+.met-card::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  transform:scaleX(0);transition:transform .4s;
+}
+.met-card:hover::before{transform:scaleX(1)}
+.met-card:hover{background:var(--dark3);transform:translateY(-4px)}
+.met-icon{font-size:1.8rem;margin-bottom:18px}
+.met-num{
+  font-family:"Playfair Display",serif;
+  font-size:2.8rem;color:var(--gold);
+  font-weight:700;display:block;line-height:1;margin-bottom:10px;
+}
+.met-lbl{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px}
+.met-sub{font-family:"Cormorant Garamond",serif;font-size:.85rem;color:rgba(154,144,128,.55);line-height:1.4}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PORTFÓLIO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.portfolio{background:var(--dark)}
+.port-head{max-width:640px;margin:0 auto 56px;text-align:center}
+.port-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:18px;max-width:1280px;margin:0 auto;
+}
+.port-card{
+  position:relative;aspect-ratio:4/5;
+  overflow:hidden;cursor:pointer;background:var(--dark2);
+}
+.port-thumb{width:100%;height:100%;position:relative}
+.port-thumb img,.port-thumb .ph{
+  width:100%;height:100%;
+  object-fit:cover;object-position:center;
+  transition:transform .5s;
+}
+.port-card:hover .port-thumb img,
+.port-card:hover .port-thumb .ph{transform:scale(1.05)}
+.port-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(8,8,8,.95) 0%,transparent 50%);
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:26px;opacity:0;transition:opacity .4s;
+}
+.port-card:hover .port-overlay{opacity:1}
+.port-overlay h3{font-family:"Playfair Display",serif;font-size:1.1rem;color:#fff;margin-bottom:6px}
+.port-overlay p{font-size:.7rem;color:var(--gold);letter-spacing:.1em}
+.port-border{
+  position:absolute;inset:0;
+  border:1px solid transparent;transition:border-color .4s;pointer-events:none;
+}
+.port-card:hover .port-border{border-color:rgba(201,168,76,.4)}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SERVIÇOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.servicos{background:var(--black)}
+.srv-head{max-width:640px;margin:0 auto 70px;text-align:center}
+.srv-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:2px;max-width:1280px;margin:0 auto;
+}
+.srv-item{
+  background:var(--dark2);padding:44px;
+  display:flex;gap:26px;align-items:flex-start;
+  transition:all .3s;position:relative;overflow:hidden;
+}
+.srv-item::after{
+  content:"";position:absolute;bottom:0;left:0;
+  width:0;height:1px;background:var(--gold);transition:width .4s;
+}
+.srv-item:hover::after{width:100%}
+.srv-item:hover{background:var(--dark3)}
+.srv-icon{
+  width:54px;height:54px;flex-shrink:0;
+  border:1px solid rgba(201,168,76,.28);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;transition:all .3s;
+}
+.srv-item:hover .srv-icon{background:rgba(201,168,76,.1);border-color:var(--gold)}
+.srv-body h3{font-family:"Playfair Display",serif;font-size:1.2rem;color:#fff;margin-bottom:10px}
+.srv-body p{font-size:.83rem;color:var(--muted);line-height:1.7}
+.srv-cta{
+  display:inline-block;margin-top:14px;
+  font-family:"Cormorant Garamond",serif;
+  font-size:.88rem;color:var(--gold);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DIFERENCIAIS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.diferenciais{background:var(--dark);position:relative;overflow:hidden}
+.diferenciais::before{
+  content:"";position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:700px;height:700px;border-radius:50%;
+  background:radial-gradient(circle,rgba(201,168,76,.04) 0%,transparent 70%);
+  pointer-events:none;
+}
+.diff-head{text-align:center;margin-bottom:72px}
+.diff-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:28px;max-width:1280px;margin:0 auto;
+}
+.diff-card{
+  padding:44px 36px;
+  border:1px solid rgba(201,168,76,.1);
+  transition:all .4s;position:relative;overflow:hidden;
+}
+.diff-card::before{
+  content:"";position:absolute;top:0;left:0;
+  width:0;height:100%;background:rgba(201,168,76,.04);transition:width .4s;
+}
+.diff-card:hover::before{width:100%}
+.diff-card:hover{border-color:rgba(201,168,76,.28);transform:translateY(-5px)}
+.diff-n{
+  font-family:"Playfair Display",serif;font-size:3.5rem;
+  color:rgba(201,168,76,.12);font-weight:900;line-height:1;margin-bottom:18px;
+}
+.diff-card h3{font-family:"Playfair Display",serif;font-size:1.2rem;color:#fff;margin-bottom:12px}
+.diff-card p{font-size:.83rem;color:var(--muted);line-height:1.7}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   CTA FINAL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.cta-final{
+  background:var(--black);text-align:center;
+  position:relative;overflow:hidden;
+}
+.cta-final::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.cta-glow{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at center,rgba(201,168,76,.06) 0%,transparent 60%);
+}
+.cta-inner{position:relative;max-width:780px;margin:0 auto}
+.cta-kicker{
+  font-size:.62rem;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:28px;display:block;
+}
+.cta-title{
+  font-family:"Playfair Display",serif;
+  font-size:clamp(2.2rem,6vw,4.8rem);
+  font-weight:700;line-height:1.1;margin-bottom:22px;
+}
+.cta-title em{color:var(--gold);font-style:italic}
+.cta-sub{
+  font-family:"Cormorant Garamond",serif;
+  font-size:1.2rem;color:var(--muted);
+  margin-bottom:52px;line-height:1.6;
+}
+.cta-btn{
+  display:inline-flex;align-items:center;gap:14px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-lt));
+  color:var(--black);padding:20px 52px;
+  font-size:.76rem;letter-spacing:.25em;
+  text-transform:uppercase;font-weight:700;
+  text-decoration:none;transition:all .4s;
+}
+.cta-btn:hover{transform:translateY(-3px);box-shadow:0 20px 60px rgba(201,168,76,.4)}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   FOOTER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+footer{
+  background:var(--dark);
+  border-top:1px solid rgba(201,168,76,.08);
+  padding:52px 5vw;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:20px;flex-wrap:wrap;
+}
+.ft-logo{font-family:"Playfair Display",serif;font-size:1.4rem;color:var(--gold);letter-spacing:.15em}
+.ft-txt{font-size:.68rem;letter-spacing:.1em;color:var(--muted)}
+.ft-agency{font-size:.66rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(154,144,128,.4)}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   WHATSAPP FLUTUANTE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.wa-float{
+  position:fixed;bottom:36px;right:36px;z-index:999;
+  width:58px;height:58px;
+  background:#25D366;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(37,211,102,.4);
+  text-decoration:none;
+  animation:wafloat 3s ease-in-out infinite;
+  transition:transform .3s,box-shadow .3s;
+}
+
+.interacao-header {
+  margin-top: 25px; /* Espaço após os cards de pub-grid */
+  margin-bottom: 15px; /* Espaço antes das barras */
+  width: 100%;
+}
+
+.interacao-title {
+  font-size: 1.1rem; /* Ajuste conforme o tamanho dos seus h4 */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--gold); /* Use a cor dourada/tema do seu site */
+  font-weight: 600;
+  text-align: left; /* Garante o alinhamento à esquerda */
+}
+
+/* Garante que o container de barras ocupe a largura total */
+.dist-wrap {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.wa-float:hover{animation:none;transform:scale(1.1);box-shadow:0 8px 30px rgba(37,211,102,.5)}
+@keyframes wafloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ANIMAÇÕES DE SCROLL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.fade-in{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}
+.fade-in.visible{opacity:1;transform:none}
+.fade-left{opacity:0;transform:translateX(-28px);transition:opacity .8s ease,transform .8s ease}
+.fade-left.visible{opacity:1;transform:none}
+.fade-right{opacity:0;transform:translateX(28px);transition:opacity .8s ease,transform .8s ease}
+.fade-right.visible{opacity:1;transform:none}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   RESPONSIVIDADE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@media(max-width:1100px){
+  .met-grid{grid-template-columns:repeat(2,1fr)}
+  .port-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-left{padding:120px 5vw 50px}
+  .hero-right{padding:0 5vw 70px}
+  .hero-frame{width:100%;max-width:100%;margin-top:0}
+  .hero-stats{left:0;bottom:20px}
+  .sobre-grid{grid-template-columns:1fr;gap:40px}
+  .diff-grid{grid-template-columns:1fr 1fr}
+  .pub-grid{grid-template-columns:1fr}
+  .srv-grid{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  section{padding:80px 5vw}
+  .nav-links{display:none}
+  .nav-btn{display:none}
+  .hamburger{display:flex}
+  .hero-left{padding:100px 5vw 40px}
+  .hero-frame{aspect-ratio:1/1}
+  .met-grid{grid-template-columns:1fr 1fr}
+  .port-grid{grid-template-columns:1fr 1fr}
+  .diff-grid{grid-template-columns:1fr}
+  footer{flex-direction:column;text-align:center;gap:14px}
+}
+@media(max-width:480px){
+  section{padding:64px 4vw}
+  .hero-left{padding:88px 4vw 36px}
+  .hero-frame{aspect-ratio:3/4}
+  .hero-stats{gap:14px;padding:14px 18px}
+  .hs-num{font-size:1.1rem}
+  .met-grid{grid-template-columns:1fr}
+  .port-grid{grid-template-columns:1fr}
+  .srv-item{flex-direction:column;gap:16px;padding:28px 22px}
+  .dist-wrap{gap:12px}
+  .wa-float{bottom:22px;right:22px;width:50px;height:50px}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="ld-name">IQUIARA</div>
+  <div class="ld-bar"></div>
+</div>
+
+<!-- WHATSAPP FLUTUANTE -->
+<a href="https://wa.me/5512982602098?text=Ol%C3%A1!%20Tenho%20interesse%20em%20contratar%20Iquiara%20para%20uma%20campanha." class="wa-float" target="_blank" aria-label="WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<!-- NAVEGAÇÃO -->
+<nav id="topnav">
+  <div class="nav-logo">Iquiara</div>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#metricas">Métricas</a></li>
+    <li><a href="#portfolio">Portfólio</a></li>
+    <li><a href="#servicos">Serviços</a></li>
+  </ul>
+  <a href="https://wa.me/5512982602098?text=Ol%C3%A1!%20Tenho%20interesse%20em%20contratar%20Iquiara%20para%20uma%20campanha." class="nav-btn" target="_blank">Contratar</a>
+  <button class="hamburger" id="ham" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MENU MOBILE -->
+<div class="mob-menu" id="mobmenu">
+  <button class="mob-close" id="mobclose">✕</button>
+  <a href="#sobre">Sobre</a>
+  <a href="#metricas">Métricas</a>
+  <a href="#portfolio">Portfólio</a>
+  <a href="#servicos">Serviços</a>
+  <a href="https://wa.me/5512982602098?text=Ol%C3%A1!%20Tenho%20interesse%20em%20contratar%20Iquiara%20para%20uma%20campanha." target="_blank">Contratar</a>
+</div>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow fade-in">Plus Size · Dança · Empoderamento</div>
+    <h1 class="hero-name fade-in">
+      Iquiara<br><em>Influencer Digital</em>
+    </h1>
+    <div class="hero-sub fade-in">@iquiaraa &nbsp;·&nbsp; São José dos Campos – SP</div>
+    <p class="hero-tagline fade-in">Se ame como é, dance com alegria e inspire quem está ao seu redor.</p>
+    <div class="hero-actions fade-in">
+      <a href="https://wa.me/5512982602098?text=Ol%C3%A1!%20Tenho%20interesse%20em%20contratar%20Iquiara%20para%20uma%20campanha." class="btn-primary" target="_blank">Contratar Agora</a>
+      <a href="#sobre" class="btn-ghost">
+        Conhecer mais
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 5v14M5 12l7 7 7-7"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-frame fade-right">
+      <div class="hero-frame-inner">
+        <img class="hero-img" style="width:100%;height:100%;object-fit:cover;object-position:top center;" src="./iquiarasentada.jpeg" alt="Foto principal de Iquiara" loading="lazy">
+      </div>
+    </div>
+    <div class="hero-stats fade-in">
+      <div class="hs-item"><span class="hs-num">27,8K</span><span class="hs-lbl">Seguidores</span></div><div class="hs-item"><span class="hs-num">1 Milhão</span><span class="hs-lbl">de impressões em 1 mês</span></div><div class="hs-item"><span class="hs-num">622K</span><span class="hs-lbl">Alcance semanal</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SOBRE ══ -->
+<section class="sobre" id="sobre">
+  <div class="sobre-grid">
+    <div class="sobre-img-wrap fade-left">
+      <img class="sobre-img" style="width:100%;height:100%;object-fit:cover;object-position:top center;" src="./iquiaralendo.jpeg" alt="Foto secundária de Iquiara" loading="lazy">
+    </div>
+    <div class="fade-right">
+      <div class="sec-tag">Quem é</div>
+      <h2 class="sec-title">Iquiara<br><em>em detalhes</em></h2>
+      <div class="gold-line"></div>
+      <p class="bio-text">Iquiara é influenciadora digital e criadora de conteúdo com foco no nicho plus size, dança e empoderamento. Natural de São José dos Campos, ela conecta marcas a uma audiência apaixonada e altamente engajada.</p>
+      <p class="bio-text">Seu objetivo é estimular as pessoas a se amarem como são, independente de julgamentos alheios — e fazer o que gostam sem medo de ser feliz.</p>
+      <div class="tags-wrap"><span class="tag">Plus Size</span><span class="tag">Dança</span><span class="tag">Empoderamento</span><span class="tag">Moda</span><span class="tag">Beleza</span><span class="tag">Eventos e Festivais</span></div>
+
+      <div class="pub-grid">
+        <div class="pub-card">
+          <h4>Gênero</h4>
+          <p>Majoritariamente feminino</p>
+        </div>
+        <div class="pub-card">
+          <h4>Faixa Etária</h4>
+          <p>18–24 e 25–34 anos (predominante)</p>
+        </div>
+        <div class="pub-card">
+          <h4>Localização</h4>
+          <p>São José dos Campos · São Paulo · Rio de Janeiro · Jacareí</p>
+        </div>
+      </div>
+        <div class="interacao-header">
+          <h4 class="interacao-title">Interação por tipo de conteúdo</h4>
+        </div>
+        <div class="dist-wrap">
+          <div class="dist-item"><span class="dist-fmt">Stories</span><span class="dist-pct">20,8%</span></div>
+          <div class="dist-item"><span class="dist-fmt">Reels</span><span class="dist-pct">74,1%</span></div>
+          <div class="dist-item"><span class="dist-fmt">Posts</span><span class="dist-pct">5,1%</span></div>
+        </div>
+      </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ MÉTRICAS ══ -->
+<section class="metricas" id="metricas">
+  <div class="met-head fade-in">
+    <div class="sec-tag" style="justify-content:center">Resultados Reais</div>
+    <h2 class="sec-title" style="text-align:center">Números que<br><em>impressionam</em></h2>
+  </div>
+  <div class="met-grid">
+    
+      <div class="met-card fade-in" style="transition-delay:0.0s">
+        <div class="met-icon">👥</div>
+        <span class="met-num" data-target="27800" data-suffix="">0</span>
+        <span class="met-lbl">Seguidores</span>
+        <span class="met-sub">Instagram</span>
+      </div>
+      <div class="met-card fade-in" style="transition-delay:0.1s">
+        <div class="met-icon">👁️</div>
+        <span class="met-num" data-target="265870" data-suffix="%">0</span>
+        <span class="met-lbl">Visualizações</span>
+        <span class="met-sub">Visualizações referente ao mês de dezembro a março</span>
+      </div>
+      <div class="met-card fade-in" style="transition-delay:0.2s">
+        <div class="met-icon">📈</div>
+        <span class="met-num" data-target="100000" data-suffix="">0</span>
+        <span class="met-lbl">Alcance</span>
+        <span class="met-sub">Visualizações referente ao mês de dezembro a março</span>
+      </div>
+      <div class="met-card fade-in" style="transition-delay:0.30000000000000004s">
+        <div class="met-icon">💬</div>
+        <span class="met-num" data-target="86" data-suffix="%">0</span>
+        <span class="met-lbl">Visualizações de não seguidores</span>
+        <span class="met-sub">De fevereiro em relação a janeiro.</span>
+      </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ PORTFÓLIO ══ -->
+<section class="portfolio" id="portfolio">
+  <div class="port-head fade-in">
+    <div class="sec-tag" style="justify-content:center">Trabalhos</div>
+    <h2 class="sec-title" style="text-align:center">Campanhas que<br><em>marcaram</em></h2>
+  </div>
+  <div class="port-grid">
+    
+      <div class="port-card fade-in" style="transition-delay:0.0s">
+        <div class="port-thumb"><img class="port-img" style="width:100%;height:100%;object-fit:cover;object-position:center;" src="./img/iquiara_camp1.jpg" alt="Campanha Plus Size" loading="lazy"></div>
+        <div class="port-overlay">
+          <h3>Campanha Plus Size</h3>
+          <p>Moda & Empoderamento</p>
+        </div>
+        <div class="port-border"></div>
+      </div>
+      <div class="port-card fade-in" style="transition-delay:0.12s">
+        <div class="port-thumb"><img class="port-img" style="width:100%;height:100%;object-fit:cover;object-position:center;" src="./img/iquiara_camp2.jpg" alt="Skincare Inclusivo" loading="lazy"></div>
+        <div class="port-overlay">
+          <h3>Skincare Inclusivo</h3>
+          <p>Beleza & Autoestima</p>
+        </div>
+        <div class="port-border"></div>
+      </div>
+      <div class="port-card fade-in" style="transition-delay:0.24s">
+        <div class="port-thumb"><img class="port-img" style="width:100%;height:100%;object-fit:cover;object-position:center;" src="./img/iquiara_camp3.jpg" alt="Festival de Dança" loading="lazy"></div>
+        <div class="port-overlay">
+          <h3>Festival de Dança</h3>
+          <p>Eventos & Cultura</p>
+        </div>
+        <div class="port-border"></div>
+      </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ SERVIÇOS ══ -->
+<section class="servicos" id="servicos">
+  <div class="srv-head fade-in">
+    <div class="sec-tag" style="justify-content:center">O que Ofereço</div>
+    <h2 class="sec-title" style="text-align:center">Serviços <em>premium</em></h2>
+  </div>
+  <div class="srv-grid">
+    
+      <div class="srv-item fade-in" style="transition-delay:0.0s">
+        <div class="srv-icon">💆</div>
+        <div class="srv-body">
+          <h3>Reviews de Produtos</h3>
+          <p>Avaliações honestas e detalhadas com storytelling envolvente e alta credibilidade junto ao público plus size.</p>
+          <span class="srv-cta">Consulte disponibilidade →</span>
+        </div>
+      </div>
+      <div class="srv-item fade-in" style="transition-delay:0.1s">
+        <div class="srv-icon">📹</div>
+        <div class="srv-body">
+          <h3>Tutoriais Patrocinados</h3>
+          <p>Conteúdo educativo passo a passo apresentando seu produto de forma natural e convertendo seguidoras em clientes.</p>
+          <span class="srv-cta">Consulte disponibilidade →</span>
+        </div>
+      </div>
+      <div class="srv-item fade-in" style="transition-delay:0.2s">
+        <div class="srv-icon">✨</div>
+        <div class="srv-body">
+          <h3>Stories & Reels</h3>
+          <p>Revelações de produtos com alto potencial viral gerando expectativa, desejo imediato e engajamento real.</p>
+          <span class="srv-cta">Consulte disponibilidade →</span>
+        </div>
+      </div>
+      <div class="srv-item fade-in" style="transition-delay:0.30000000000000004s">
+        <div class="srv-icon">🌟</div>
+        <div class="srv-body">
+          <h3>Embaixadora de Marca</h3>
+          <p>Parceria de longo prazo representando a marca em todos os formatos de conteúdo com autenticidade.</p>
+          <span class="srv-cta">Consulte disponibilidade →</span>
+        </div>
+      </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ DIFERENCIAIS ══ -->
+<section class="diferenciais">
+  <div class="diff-head fade-in">
+    <div class="sec-tag" style="justify-content:center">Por Que Escolher</div>
+    <h2 class="sec-title" style="text-align:center">Meus <em>diferenciais</em></h2>
+  </div>
+  <div class="diff-grid">
+    <div class="diff-card fade-in">
+      <div class="diff-n">01</div>
+      <h3>Audiência Qualificada</h3>
+      <p>Seguidores reais e engajados com perfil alinhado ao público-alvo, garantindo campanhas com resultado mensurável e conversão real.</p>
+    </div>
+    <div class="diff-card fade-in" style="transition-delay:.1s">
+      <div class="diff-n">02</div>
+      <h3>Alta Conversão</h3>
+      <p>Histórico comprovado de campanhas com retorno acima da média do mercado, com marcas de diferentes segmentos e tamanhos.</p>
+    </div>
+    <div class="diff-card fade-in" style="transition-delay:.2s">
+      <div class="diff-n">03</div>
+      <h3>Estratégia Personalizada</h3>
+      <p>Cada parceria é planejada de forma única, respeitando a identidade da marca e maximizando o impacto de cada campanha.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA FINAL ══ -->
+<section class="cta-final">
+  <div class="cta-glow"></div>
+  <div class="cta-inner fade-in">
+    <span class="cta-kicker">Pronto para crescer?</span>
+    <h2 class="cta-title">Leve sua marca<br>para outro <em>nível</em></h2>
+    <p class="cta-sub">Entre em contato agora e descubra como uma parceria com Iquiara pode transformar sua presença digital.</p>
+    <a href="https://wa.me/5512982602098?text=Ol%C3%A1!%20Tenho%20interesse%20em%20contratar%20Iquiara%20para%20uma%20campanha." class="cta-btn" target="_blank">
+      Falar no WhatsApp
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-logo">Iquiara</div>
+  <div class="ft-txt">© 2025 · Todos os direitos reservados</div>
+  <div class="ft-agency">PAIVA Assessoria & Marketing</div>
+</footer>
+
+<script>
+/* ── LOADER ── */
+window.addEventListener("load", () => {
+  setTimeout(() => document.getElementById("loader").classList.add("hidden"), 1600);
+});
+
+/* ── NAV SCROLL ── */
+const nav = document.getElementById("topnav");
+let lastY = 0;
+window.addEventListener("scroll", () => {
+  nav.classList.toggle("scrolled", window.scrollY > 60);
+  lastY = window.scrollY;
+}, {passive:true});
+
+/* ── HAMBURGER ── */
+const ham = document.getElementById("ham");
+const mob = document.getElementById("mobmenu");
+const cls = document.getElementById("mobclose");
+const open = () => { ham.classList.add("open"); mob.classList.add("open"); document.body.style.overflow="hidden"; };
+const close = () => { ham.classList.remove("open"); mob.classList.remove("open"); document.body.style.overflow=""; };
+ham.addEventListener("click", () => ham.classList.contains("open") ? close() : open());
+cls.addEventListener("click", close);
+mob.querySelectorAll("a").forEach(a => a.addEventListener("click", close));
+mob.addEventListener("click", e => { if(e.target===mob) close(); });
+document.addEventListener("keydown", e => { if(e.key==="Escape") close(); });
+
+/* ── SCROLL ANIMATIONS ── */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+      const counter = entry.target.querySelector("[data-target]");
+      if (counter && !counter.dataset.done) animCounter(counter);
+    }
+  });
+}, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+document.querySelectorAll(".fade-in,.fade-left,.fade-right").forEach(el => observer.observe(el));
+
+/* ── COUNTER ── */
+function animCounter(el) {
+  el.dataset.done = "1";
+  const raw    = el.dataset.target;
+  const suffix = el.dataset.suffix || "";
+  const target = parseFloat(raw);
+  const isFloat = raw.includes(".");
+  const dur = 2000;
+  const start = performance.now();
+
+  function fmt(val) {
+    if (target >= 1000000) return (val/1000000).toFixed(2).replace(".",",") + " Mi";
+    if (target >= 100000)  return Math.floor(val/1000) + "K";
+    if (target >= 10000)   return (val/1000).toFixed(1).replace(".",",") + "K";
+    if (isFloat)           return val.toFixed(2).replace(".",",") + suffix;
+    return Math.floor(val).toLocaleString("pt-BR") + suffix;
+  }
+
+  (function tick(now) {
+    const progress = Math.min((now - start) / dur, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    el.textContent = fmt(target * ease);
+    if (progress < 1) requestAnimationFrame(tick);
+    else el.textContent = fmt(target);
+  })(start);
+}
+
+/* ── PARALLAX HERO ── */
+window.addEventListener("scroll", () => {
+  const frame = document.querySelector(".hero-frame");
+  if (frame && window.scrollY < window.innerHeight) {
+    frame.style.transform = `translateY(${window.scrollY * 0.08}px)`;
+  }
+}, {passive:true});
+
+/* ── SMOOTH SCROLL ── */
+document.querySelectorAll("a[href^='#']").forEach(a => {
+  a.addEventListener("click", e => {
+    const t = document.querySelector(a.getAttribute("href"));
+    if (t) { e.preventDefault(); t.scrollIntoView({behavior:"smooth"}); }
+  });
+});
+</script>
+</body>
+</html>
