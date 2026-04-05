@@ -52,6 +52,7 @@
             color: inherit
         }
 
+        /* ── LOADER ── */
         #loader {
             position: fixed;
             inset: 0;
@@ -117,6 +118,7 @@
             }
         }
 
+        /* ── NAV ── */
         nav#topnav {
             position: fixed;
             top: 0;
@@ -254,6 +256,7 @@
             line-height: 1
         }
 
+        /* ── HERO ── */
         .hero {
             min-height: 100vh;
             display: grid;
@@ -471,6 +474,7 @@
             color: var(--muted)
         }
 
+        /* ── SECTIONS COMMONS ── */
         section {
             padding: 110px 5vw
         }
@@ -519,6 +523,7 @@
             margin: 0 5vw
         }
 
+        /* ── SOBRE ── */
         .sobre {
             background: var(--dark)
         }
@@ -657,6 +662,7 @@
             text-align: left
         }
 
+        /* ── MÉTRICAS ── */
         .metricas {
             background: var(--black)
         }
@@ -736,6 +742,7 @@
             line-height: 1.4
         }
 
+        /* ── PORTFÓLIO ── */
         .portfolio {
             background: var(--dark)
         }
@@ -754,6 +761,7 @@
             margin: 0 auto
         }
 
+        /* Card container */
         .port-card {
             position: relative;
             aspect-ratio: 4/5;
@@ -762,6 +770,7 @@
             background: var(--dark2)
         }
 
+        /* Wrapper do vídeo/imagem — preenche o card inteiro */
         .port-insta-wrap {
             position: absolute;
             inset: 0;
@@ -769,20 +778,48 @@
             background: var(--dark2)
         }
 
+        /* Vídeo ocupa 100% do wrapper */
+        .port-insta-wrap video,
         .port-insta-wrap img {
             position: absolute;
             inset: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: top center;
+            object-position: center;
             transition: transform .5s ease
         }
 
+        .port-card:hover .port-insta-wrap video,
         .port-card:hover .port-insta-wrap img {
             transform: scale(1.05)
         }
 
+        /* Botão de som — dentro do port-insta-wrap, sobre o vídeo */
+        .sound-btn {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            z-index: 10;
+            background: rgba(0, 0, 0, .65);
+            border: 1px solid rgba(201, 168, 76, .35);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            line-height: 1.4;
+            backdrop-filter: blur(6px);
+            transition: background .2s, opacity .3s;
+            opacity: 0
+        }
+
+        /* Mostrar botão de som ao hover do card */
+        .port-card:hover .sound-btn {
+            opacity: 1
+        }
+
+        /* Overlay de texto (hover) — z-index acima do vídeo mas abaixo do sound-btn */
         .port-overlay {
             position: absolute;
             inset: 0;
@@ -793,8 +830,8 @@
             padding: 26px;
             opacity: 0;
             transition: opacity .4s;
-            pointer-events: none;
-            z-index: 2
+            z-index: 5;
+            pointer-events: none
         }
 
         .port-card:hover .port-overlay {
@@ -814,24 +851,26 @@
             letter-spacing: .1em
         }
 
+        /* Borda dourada hover */
         .port-border {
             position: absolute;
             inset: 0;
             border: 1px solid transparent;
             transition: border-color .4s;
             pointer-events: none;
-            z-index: 3
+            z-index: 8
         }
 
         .port-card:hover .port-border {
             border-color: rgba(201, 168, 76, .4)
         }
 
+        /* Botão "Ver no Instagram" — topo direito */
         .port-ig-btn {
             position: absolute;
             top: 14px;
             right: 14px;
-            z-index: 4;
+            z-index: 9;
             background: rgba(8, 8, 8, .75);
             border: 1px solid rgba(201, 168, 76, .35);
             color: var(--gold);
@@ -856,6 +895,7 @@
             background: rgba(201, 168, 76, .15)
         }
 
+        /* ── SERVIÇOS ── */
         .servicos {
             background: var(--black)
         }
@@ -934,6 +974,7 @@
             line-height: 1.7
         }
 
+        /* ── DIFERENCIAIS ── */
         .diferenciais {
             background: var(--dark);
             position: relative;
@@ -1016,6 +1057,7 @@
             line-height: 1.7
         }
 
+        /* ── CTA FINAL ── */
         .cta-final {
             background: var(--black);
             text-align: center;
@@ -1095,6 +1137,7 @@
             box-shadow: 0 20px 60px rgba(201, 168, 76, .4)
         }
 
+        /* ── FOOTER ── */
         footer {
             background: var(--dark);
             border-top: 1px solid rgba(201, 168, 76, .08);
@@ -1126,6 +1169,7 @@
             color: rgba(154, 144, 128, .4)
         }
 
+        /* ── WA FLOAT ── */
         .wa-float {
             position: fixed;
             bottom: 36px;
@@ -1162,6 +1206,7 @@
             }
         }
 
+        /* ── ANIMAÇÕES DE ENTRADA ── */
         .fade-in {
             opacity: 0;
             transform: translateY(28px);
@@ -1195,6 +1240,7 @@
             transform: none
         }
 
+        /* ── RESPONSIVO ── */
         @media(max-width:1100px) {
             .met-grid {
                 grid-template-columns: repeat(2, 1fr)
@@ -1290,6 +1336,11 @@
                 text-align: center;
                 gap: 14px
             }
+
+            /* Som sempre visível em touch */
+            .sound-btn {
+                opacity: 1
+            }
         }
 
         @media(max-width:480px) {
@@ -1309,42 +1360,6 @@
                 gap: 14px;
                 padding: 14px 18px
             }
-
- /* ━━━━ PORTFÓLIO ━━━━ */
-    .portfolio{background:var(--dark)}
-    .port-head{max-width:640px;margin:0 auto 56px;text-align:center}
-    .port-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1280px;margin:0 auto}
- 
-    /* Card — proporção 4:5 */
-    .port-card{position:relative;aspect-ratio:4/5;overflow:hidden;cursor:pointer;background:var(--dark2)}
- 
-    /* Wrapper do vídeo — cobre 100% do card */
-    .port-insta-wrap{position:absolute;inset:0;overflow:hidden;background:var(--dark2)}
- 
-    /* Vídeo cobre o card inteiro */
-    .port-insta-wrap video{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      object-position:center;
-    }
- 
-    /* Botão de som */
-    .sound-btn{
-      position:absolute;
-      bottom:10px;
-      right:10px;
-      z-index:5;
-      background:rgba(0,0,0,.6);
-      border:none;
-      color:#fff;
-      padding:6px 10px;
-      border-radius:20px;
-      cursor:pointer;
-      font-size:14px;
-    }
 
             .hs-num {
                 font-size: 1.1rem
@@ -1373,6 +1388,10 @@
                 right: 22px;
                 width: 50px;
                 height: 50px
+            }
+
+            .sound-btn {
+                opacity: 1
             }
         }
     </style>
@@ -1420,7 +1439,7 @@
     <section class="hero">
         <div class="hero-left">
             <div class="hero-eyebrow fade-in">Lifestyle · Moda · Estilo</div>
-            <h1 class="hero-name fade-in">Thiago<br><em>Influencer Digital</em></h1>
+            <h1 class="hero-name fade-in">Thiago<br><em>Creator</em></h1>
             <div class="hero-sub fade-in">@barccelos &nbsp;·&nbsp; São Paulo · Rio de Janeiro · São José dos Campos
             </div>
             <p class="hero-tagline fade-in">Um post que gerou 8.030 interações, 44,9K views e 1.360 novos seguidores —
@@ -1437,7 +1456,7 @@
         <div class="hero-right">
             <div class="hero-frame fade-right">
                 <div class="hero-frame-inner">
-<img src="./oculosdesol.jpeg" alt="Foto principal de Thiago Barcelos" loading="lazy">
+                    <img src="./oculosdesol.jpeg" alt="Foto principal de Thiago Barcelos" loading="lazy">
                 </div>
             </div>
             <div class="hero-stats fade-in">
@@ -1452,7 +1471,7 @@
     <section class="sobre" id="sobre">
         <div class="sobre-grid">
             <div class="sobre-img-wrap fade-left">
-<img src="./showdualipa.jpeg" alt="Foto secundária de Thiago Barcelos" loading="lazy">
+                <img src="./showdualipa.jpeg" alt="Foto secundária de Thiago Barcelos" loading="lazy">
             </div>
             <div class="fade-right">
                 <div class="sec-tag">Quem é</div>
@@ -1533,65 +1552,68 @@
     <div class="divider"></div>
 
     <!-- PORTFÓLIO -->
-   <section class="portfolio" id="portfolio">
-  <div class="port-head fade-in">
-    <div class="sec-tag" style="justify-content:center">Trabalhos</div>
-    <h2 class="sec-title" style="text-align:center">Campanhas que<br><em>marcaram</em></h2>
-  </div>
-  <div class="port-grid">
- 
-    <!-- Card 1 -->
-    <div class="port-card fade-in" style="transition-delay:0.0s">
-      <div class="port-insta-wrap">
-        <video autoplay muted loop playsinline>
-          <source src="./NULO_video1.mp4" type="video/mp4">
-        </video>
-        <button class="sound-btn">🔇</button>
-      </div>
-      <div class="port-overlay">
-        <h3>NULO — Parceria</h3>
-        <p>NULO</p>
-      </div>
-      <a class="port-ig-btn" href="https://www.instagram.com/" target="_blank" rel="noopener">Ver no Instagram</a>
-      <div class="port-border"></div>
-    </div>
- 
-    <!-- Card 2 -->
-    <div class="port-card fade-in" style="transition-delay:0.1s">
-      <div class="port-insta-wrap">
-        <video autoplay muted loop playsinline>
-          <source src="./NULO_video2.mp4" type="video/mp4">
-        </video>
-        <button class="sound-btn">🔇</button>
-      </div>
-      <div class="port-overlay">
-        <h3>NULO — Parceria</h3>
-        <p>NULO</p>
-      </div>
-      <a class="port-ig-btn" href="https://www.instagram.com/" target="_blank" rel="noopener">Ver no Instagram</a>
-      <div class="port-border"></div>
-    </div>
- 
-    <!-- Card 3 -->
-    <div class="port-card fade-in" style="transition-delay:0.2s">
-      <div class="port-insta-wrap">
-        <video autoplay muted loop playsinline>
-          <source src="./NULO_video3.mp4" type="video/mp4">
-        </video>
-        <button class="sound-btn">🔇</button>
-      </div>
-      <div class="port-overlay">
-        <h3>NULO — Parceria</h3>
-        <p>NULO</p>
-      </div>
-      <a class="port-ig-btn" href="https://www.instagram.com/" target="_blank" rel="noopener">Ver no Instagram</a>
-      <div class="port-border"></div>
-    </div>
- 
-  </div>
-</section>
- 
-<div class="divider"></div>
+    <section class="portfolio" id="portfolio">
+        <div class="port-head fade-in">
+            <div class="sec-tag" style="justify-content:center">Trabalhos</div>
+            <h2 class="sec-title" style="text-align:center">Campanhas que<br><em>marcaram</em></h2>
+        </div>
+        <div class="port-grid">
+
+            <!-- Card 1 -->
+            <div class="port-card fade-in" style="transition-delay:0.0s">
+                <div class="port-insta-wrap">
+                    <video autoplay muted loop playsinline preload="metadata">
+                        <source src="./videoviral3.mp4" type="video/mp4">
+                    </video>
+                    <button class="sound-btn" aria-label="Ativar som">🔇</button>
+                </div>
+                <div class="port-overlay">
+                    <h3>Video Viral — Show Miley Cirus</h3>
+                    <p>Conteúdo que gerou impacto significativo em redes sociais, com alta engajamento e alcance.</p>
+                </div>
+                <a class="port-ig-btn" href="https://www.instagram.com/reel/CbxhGRRAla1/" target="_blank" rel="noopener">Ver no
+                    Instagram</a>
+                <div class="port-border"></div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="port-card fade-in" style="transition-delay:0.1s">
+                <div class="port-insta-wrap">
+                    <video autoplay muted loop playsinline preload="metadata">
+                        <source src="./videoviral2.mp4" type="video/mp4">
+                    </video>
+                    <button class="sound-btn" aria-label="Ativar som">🔇</button>
+                </div>
+                <div class="port-overlay">
+                    <h3>Video Viral — Trend</h3>
+                    <p>Conteúdo que gerou impacto significativo em redes sociais, com alta engajamento e alcance.</p>
+                </div>
+                <a class="port-ig-btn" href="https://www.instagram.com/reel/CaC7xogAFiq/" target="_blank" rel="noopener">Ver no
+                    Instagram</a>
+                <div class="port-border"></div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="port-card fade-in" style="transition-delay:0.2s">
+                <div class="port-insta-wrap">
+                    <video autoplay muted loop playsinline preload="metadata">
+                        <source src="./videoviral.mp4" type="video/mp4">
+                    </video>
+                    <button class="sound-btn" aria-label="Ativar som">🔇</button>
+                </div>
+                <div class="port-overlay">
+                    <h3>Video Viral - Trend</h3>
+                    <p>Conteúdo que gerou impacto significativo em redes sociais, com alta engajamento e alcance.</p>
+                </div>
+                <a class="port-ig-btn" href="https://www.instagram.com/reel/CUA5sUxgE_i/" target="_blank" rel="noopener">Ver no
+                    Instagram</a>
+                <div class="port-border"></div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="divider"></div>
 
     <!-- SERVIÇOS -->
     <section class="servicos" id="servicos">
@@ -1690,18 +1712,29 @@
     </footer>
 
     <script>
+        // Loader
         window.addEventListener("load", () => {
             setTimeout(() => document.getElementById("loader").classList.add("hidden"), 1600);
         });
+
+        // Nav scroll
         const nav = document.getElementById("topnav");
-        window.addEventListener("scroll", () => { nav.classList.toggle("scrolled", window.scrollY > 60); }, { passive: true });
-        const ham = document.getElementById("ham"), mob = document.getElementById("mobmenu"), cls = document.getElementById("mobclose");
+        window.addEventListener("scroll", () => {
+            nav.classList.toggle("scrolled", window.scrollY > 60);
+        }, { passive: true });
+
+        // Menu mobile
+        const ham = document.getElementById("ham");
+        const mob = document.getElementById("mobmenu");
+        const cls = document.getElementById("mobclose");
         const openMenu = () => { ham.classList.add("open"); mob.classList.add("open"); document.body.style.overflow = "hidden"; };
         const closeMenu = () => { ham.classList.remove("open"); mob.classList.remove("open"); document.body.style.overflow = ""; };
         ham.addEventListener("click", () => ham.classList.contains("open") ? closeMenu() : openMenu());
         cls.addEventListener("click", closeMenu);
         mob.querySelectorAll("a").forEach(a => a.addEventListener("click", closeMenu));
         document.addEventListener("keydown", e => { if (e.key === "Escape") closeMenu(); });
+
+        // Intersection Observer (fade-in + contador)
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1712,6 +1745,8 @@
             });
         }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
         document.querySelectorAll(".fade-in,.fade-left,.fade-right").forEach(el => observer.observe(el));
+
+        // Contador animado
         function animCounter(el) {
             el.dataset.done = "1";
             const raw = el.dataset.target;
@@ -1735,12 +1770,16 @@
                 else el.textContent = fmt(target);
             })(start);
         }
+
+        // Parallax hero
         window.addEventListener("scroll", () => {
             const frame = document.querySelector(".hero-frame");
             if (frame && window.scrollY < window.innerHeight) {
                 frame.style.transform = `translateY(${window.scrollY * 0.08}px)`;
             }
         }, { passive: true });
+
+        // Scroll suave links internos
         document.querySelectorAll("a[href^='#']").forEach(a => {
             a.addEventListener("click", e => {
                 const t = document.querySelector(a.getAttribute("href"));
@@ -1748,13 +1787,28 @@
             });
         });
 
-          document.querySelectorAll(".sound-btn").forEach(btn => {
-                btn.addEventListener("click", () => {
-                    const video = btn.closest(".port-insta-wrap").querySelector("video");
-                    if (video.muted) { video.muted = false; btn.textContent = "🔊"; }
-                    else { video.muted = true; btn.textContent = "🔇"; }
-                });
+        // Botões de som — cada botão controla seu próprio vídeo
+        document.querySelectorAll(".sound-btn").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                e.stopPropagation(); // evita conflito com outros eventos do card
+                const video = btn.closest(".port-insta-wrap").querySelector("video");
+                if (!video) return;
+                if (video.muted) {
+                    // Muta todos os outros vídeos primeiro
+                    document.querySelectorAll(".port-insta-wrap video").forEach(v => {
+                        if (v !== video) {
+                            v.muted = true;
+                            v.closest(".port-insta-wrap").querySelector(".sound-btn").textContent = "🔇";
+                        }
+                    });
+                    video.muted = false;
+                    btn.textContent = "🔊";
+                } else {
+                    video.muted = true;
+                    btn.textContent = "🔇";
+                }
             });
+        });
     </script>
 </body>
 
